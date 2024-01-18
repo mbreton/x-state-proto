@@ -1,0 +1,16 @@
+{
+  "name": "x-state-proto-domain",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "xstate": "5.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
