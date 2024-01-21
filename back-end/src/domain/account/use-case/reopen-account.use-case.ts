@@ -1,19 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Account } from 'x-state-proto-domain';
-import { IAccountRepository } from '../gateways/IAccountRepository';
+import { AccountRepository } from '../gateways/account-repository';
 
 @Injectable()
 export class ReopenAccountUseCase {
   constructor(
-    @Inject('ACCOUNT_REPOSITORY') private accountRepository: IAccountRepository,
+    @Inject('ACCOUNT_REPOSITORY') private accountRepository: AccountRepository,
   ) {}
 
   async execute(id: number): Promise<Account> {
     const foundAccount = await this.accountRepository.findOne({ id });
     const accountToSave = foundAccount
-      .wrap()
+      .unlock()
       .dispatch({ type: 'REOPEN' })
-      .unwrap();
+      .collect();
     return this.accountRepository.save(accountToSave);
   }
 }

@@ -1,9 +1,9 @@
-import { IAccountRepository } from '../domain/account/gateways/IAccountRepository';
+import { AccountRepository } from '../domain/account/gateways/account-repository';
 import { Account } from 'x-state-proto-domain';
 import { AccountEntity } from './account.entity';
 import { ClassProvider } from '@nestjs/common';
 
-export class AccountRepository implements IAccountRepository {
+export class PgAccountRepository implements AccountRepository {
   async findOne(options: { id?: number }): Promise<Account> {
     const result = await AccountEntity.findOne({
       where: { ...(options.id ? { id: options.id } : undefined) },
@@ -27,5 +27,5 @@ export class AccountRepository implements IAccountRepository {
 
 export const AccountRepositoryProvider: ClassProvider<AccountRepository> = {
   provide: 'ACCOUNT_REPOSITORY',
-  useClass: AccountRepository,
+  useClass: PgAccountRepository,
 };

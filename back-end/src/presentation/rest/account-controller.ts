@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { GetAllAccountUseCase } from '../../domain/account/use-case/get-all-account.use-case';
 import { CloseAccountUseCase } from '../../domain/account/use-case/close-account.use-case';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
@@ -39,13 +31,7 @@ export class AccountController {
   @Post(':id/close')
   @ApiParam({ name: 'id', type: 'string' })
   async close(@Param() { id }: { id: number }): Promise<Account> {
-    try {
-      return await this.closeAccount.execute(id);
-    } catch (err) {
-      throw new HttpException('Not modified', HttpStatus.NOT_MODIFIED, {
-        cause: err,
-      });
-    }
+    return await this.closeAccount.execute(id);
   }
 
   @Get(':id/inspect')
@@ -59,25 +45,13 @@ export class AccountController {
   @Post(':id/reopen')
   @ApiParam({ name: 'id', type: 'string' })
   async reopen(@Param() { id }: { id: number }): Promise<Account> {
-    try {
-      return await this.reopenAccount.execute(id);
-    } catch (err) {
-      throw new HttpException('Not modified', HttpStatus.NOT_MODIFIED, {
-        cause: err,
-      });
-    }
+    return await this.reopenAccount.execute(id);
   }
 
   @Post(':id/simulate-no-more-money-event')
   @ApiParam({ name: 'id', type: 'string' })
   async simulateNoMoreMoney(@Param() { id }: { id: number }): Promise<Account> {
-    try {
-      return await this.noMoreMoney.execute(id);
-    } catch (err) {
-      throw new HttpException('Not modified', HttpStatus.NOT_MODIFIED, {
-        cause: err,
-      });
-    }
+    return await this.noMoreMoney.execute(id);
   }
 
   @Post(':id/update')

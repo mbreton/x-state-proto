@@ -1,6 +1,6 @@
 import { Account } from 'x-state-proto-domain';
 
-export interface IAccountRepository {
+export interface AccountRepository {
   save(account: Account): Promise<Account>;
 
   findAll(): Promise<Account[]>;

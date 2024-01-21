@@ -11,9 +11,10 @@
     "domain"
   ],
   "scripts": {
-    "start:dev": "stmux -w always -e ERROR -m system -- [ \"yarn start:dev:back\" .. \"yarn start:dev:front\" ]",
+    "start:dev": "stmux -w always -e ERROR -m system -- [ [ \"yarn start:dev:back\" .. \"yarn start:dev:front\" ] : -s 1/5 \"yarn start:dev:domain\" ]",
     "start:dev:front": "cd front-end && yarn start",
-    "start:dev:back": "cd back-end && yarn start:dev"
+    "start:dev:back": "cd back-end && yarn start:dev",
+    "start:dev:domain": "cd domain && yarn start:dev"
   },
   "devDependencies": {
     "stmux": "^1.8.7"
