@@ -15,7 +15,7 @@ export class UpdateAccountUseCase {
     const foundAccount = await this.accountRepository.findOne({ id: id });
 
     const accountToSave = foundAccount
-      .unlock()
+      .unseal()
       .dispatch({ type: 'SET_PROPS', params: props }, false)
       .collect();
     return this.accountRepository.save(accountToSave);

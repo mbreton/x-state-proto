@@ -10,6 +10,6 @@ export class InspectAccountUseCase {
 
   async execute(id: number): Promise<{ snapshot: Snapshot<unknown> }> {
     const foundAccount = await this.accountRepository.findOne({ id: id });
-    return { snapshot: foundAccount.unlock().getPersistedSnapshot() };
+    return { snapshot: foundAccount.unseal().getPersistedSnapshot() };
   }
 }

@@ -11,7 +11,7 @@ export class CloseAccountUseCase {
   async execute(id: number): Promise<Account> {
     const foundAccount = await this.accountRepository.findOne({ id });
     const accountToSave = foundAccount
-      .unlock()
+      .unseal()
       .dispatch({ type: 'CLOSE' })
       .collect();
     return this.accountRepository.save(accountToSave);

@@ -21,7 +21,7 @@ export abstract class DomainModel<
 
   protected abstract toStateMachineId(): TMachine["id"];
 
-  unlock() {
+  unseal() {
     const actor = createActor(this._stateMachine, {
       id: this.toStateMachineId(),
       snapshot: this.toSnapshot(),
