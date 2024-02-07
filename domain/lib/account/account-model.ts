@@ -52,6 +52,14 @@ export class Account extends DomainModel<
   protected toStateMachineId(): AccountStateMachine["id"] {
     return this.id ? `acccount-${this.id}` : `account-new`;
   }
+
+  public close() {
+    return this.unseal().dispatch({ type: "CLOSE" });
+  }
+
+  public set(params: Pick<Account, "name" | "country">) {
+    return this.unseal().dispatch({ type: "SET_PROPS", params }, false);
+  }
 }
 
 export const accountCountries = ["FRA", "DEU", "ESP", "NLD"] as const;

@@ -8,6 +8,8 @@ export abstract class DomainModel<
   TCommand extends EventObject, // Generic Type of the commands taking as input of the model
   TModel, // Generic Type of the type itself
 > {
+  protected _actor?: ExtendedActor<TMachine, TCommand, TModel>;
+
   /**
    * @param _stateMachine A declaration of the StateMachine which will protect the model
    * @protected
@@ -16,7 +18,7 @@ export abstract class DomainModel<
 
   /**
    * This method will map the basic model to a StateMachine Snapshot
-   * and must be implemented by the sub class model
+   * and must be implemented by the sub-class model
    * @protected
    */
   protected abstract toSnapshot(): ReturnType<TMachine["resolveState"]>;
@@ -37,14 +39,17 @@ export abstract class DomainModel<
    * the only way to make changes on the model. The Actor plays the role of guardian
    * which guarantee to never break the state machine and limit actions according to
    * the current state
-   * @return ExtendedActor is an enchanced Actor of the XState lib with two more methods "dispatch" and "collect"
+   * @return ExtendedActor is an enhanced Actor of the XState lib with two more methods "dispatch" and "collect"
    */
   unseal() {
     /**
      *  We will first create and start an actor from the snapshot mapper defined by the sub-class.
      *  The snapshot is data handled by the actor at a point of time.
      */
-    const actor = createActor(this._stateMachine, {
+    if (this._actor) {
+      return this._actor;
+    }
+    this._actor = createActor(this._stateMachine, {
       id: this.toStateMachineId(),
       snapshot: this.toSnapshot(),
     }).start() as ExtendedActor<TMachine, TCommand, TModel>;
@@ -74,17 +79,17 @@ export abstract class DomainModel<
         this.fromSnapshot(that.getSnapshot());
 
     // bind the two methods to the actor
-    actor.dispatch = bindDispatchFn(actor);
-    actor.collect = bindCollectFn(actor);
+    this._actor.dispatch = bindDispatchFn(this._actor);
+    this._actor.collect = bindCollectFn(this._actor);
 
-    return actor;
+    return this._actor;
   }
 }
 
 /**
  * ExtendedActor defines the type of the enhanced actor with the two new methods
  */
-interface ExtendedActor<
+export interface ExtendedActor<
   TMachine extends SimplifiedStateMachine<TCommand>,
   TCommand extends EventObject,
   TModel,

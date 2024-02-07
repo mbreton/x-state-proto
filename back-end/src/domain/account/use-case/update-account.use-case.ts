@@ -13,10 +13,7 @@ export class UpdateAccountUseCase {
     props: UpdateAccountUseCaseParams,
   ): Promise<Account> {
     const foundAccount = await this.accountRepository.findOne({ id: id });
-    const accountToSave = foundAccount
-      .unseal()
-      .dispatch({ type: 'SET_PROPS', params: props }, false)
-      .collect();
+    const accountToSave = foundAccount.set(props).collect();
     return this.accountRepository.save(accountToSave);
   }
 }

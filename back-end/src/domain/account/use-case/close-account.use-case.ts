@@ -10,10 +10,7 @@ export class CloseAccountUseCase {
 
   async execute(id: number): Promise<Account> {
     const foundAccount = await this.accountRepository.findOne({ id });
-    const accountToSave = foundAccount
-      .unseal()
-      .dispatch({ type: 'CLOSE' })
-      .collect();
+    const accountToSave = foundAccount.close().collect();
     return this.accountRepository.save(accountToSave);
   }
 }
