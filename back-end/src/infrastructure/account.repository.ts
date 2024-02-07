@@ -15,8 +15,8 @@ export class PgAccountRepository implements AccountRepository {
   }
 
   async save(account: Account): Promise<Account> {
-    const result0 = await AccountEntity.fromDomain(account).save();
-    return AccountEntity.toDomain(result0);
+    const result = await AccountEntity.fromDomain(account).save();
+    return AccountEntity.toDomain(result);
   }
 
   async findAll(): Promise<Account[]> {

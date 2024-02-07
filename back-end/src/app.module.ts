@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { OnboardingController } from './presentation/rest/onboarding-controller';
 import { FinalizeOnboardingUseCase } from './domain/account/use-case/finalize-onboarding.use-case';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
@@ -16,13 +14,12 @@ import { InspectAccountUseCase } from './domain/account/use-case/inspect-account
 
 @Module({
   imports: [InfrastructureModule],
-  controllers: [AppController, OnboardingController, AccountController],
+  controllers: [OnboardingController, AccountController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
     },
-    AppService,
     FinalizeOnboardingUseCase,
     GetAllAccountUseCase,
     CloseAccountUseCase,

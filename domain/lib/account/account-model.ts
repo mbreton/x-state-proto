@@ -1,14 +1,10 @@
-import {DomainModel} from "../domain-model";
-import {accountStateMachine, AccountStateMachine,} from "./account.state-machine";
-import {AccountCommand} from "./account.command";
-
-/**
- * TODO:
- * - Mettre une entité liée au account
- *   pour voir comment ça pourrait fonctionner
- *   avec notamment sur l'actor
- * - Cacher les méthodes de l'actor quand l'on unlock le model
- */
+import { DomainModel } from "../domain-model";
+import {
+  accountStateMachine,
+  AccountStateMachine,
+  StateMachineSnapshot,
+} from "./account.state-machine";
+import { AccountCommand } from "./account.command";
 
 export function createNewAccount(name: string, country: AccountCountry) {
   return new Account({
@@ -35,7 +31,7 @@ export class Account extends DomainModel<
     this.status = status;
   }
 
-  protected toSnapshot(): ReturnType<AccountStateMachine["resolveState"]> {
+  protected toSnapshot(): StateMachineSnapshot {
     return this._stateMachine.resolveState({
       value: this.status,
       context: {
@@ -46,9 +42,7 @@ export class Account extends DomainModel<
     });
   }
 
-  protected fromSnapshot(
-    snapshot: ReturnType<AccountStateMachine["resolveState"]>,
-  ): Account {
+  protected fromSnapshot(snapshot: StateMachineSnapshot): Account {
     return new Account({
       ...snapshot.context,
       status: snapshot.value,

@@ -1,8 +1,15 @@
-import { assign, setup } from "xstate";
-import { AccountCommand } from "./account.command";
-import { AccountCountry } from "./account-model";
+import {assign, setup} from "xstate";
+import {AccountCommand} from "./account.command";
+import {AccountCountry} from "./account-model";
 
+/**
+ * Account State machine definition, properly seperated from the Account Model.
+ * It defines the states, the actions possible in this state, and types in this State machine.
+ */
 export const accountStateMachine = setup({
+  /**
+   * Here, we define the data types managed by the State Machine and the commands accepted
+   */
   types: {} as {
     context: { id?: number; name?: string; country?: AccountCountry };
     events: AccountCommand;
@@ -50,4 +57,10 @@ export const accountStateMachine = setup({
     },
   },
 });
+/**
+ * Types alias for convenience
+ */
 export type AccountStateMachine = typeof accountStateMachine;
+export type StateMachineSnapshot = ReturnType<
+  AccountStateMachine["resolveState"]
+>;
