@@ -11,11 +11,12 @@
     "domain"
   ],
   "scripts": {
+    "start": "yarn start:dev",
     "start:dev": "stmux -w always -e ERROR -m system -- [ [ \"yarn start:dev:back\" .. \"yarn start:dev:front\" ] : -s 1/5 \"yarn start:dev:domain\" ]",
     "start:dev:front": "cd front-end && yarn start",
     "start:dev:back": "cd back-end && yarn start:dev",
     "start:dev:domain": "cd domain && yarn start:dev",
-    "clean": "rm -Rf node_modules back-end/node_modules front-end/node_modules domain/dist",
+    "clean": "rm -Rf node_modules back-end/node_modules front-end/node_modules domain/node_modules domain/dist",
     "prenuke": "yarn clean",
     "nuke": "rm -Rf back-end/dist domain/dist"
   },
