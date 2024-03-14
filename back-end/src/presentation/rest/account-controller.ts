@@ -57,7 +57,7 @@ export class AccountController {
   @Post(':id/update')
   @ApiParam({ name: 'id', type: 'string' })
   @ApiBody({ type: UpdateAccountUseCaseParams })
-  async simulaiteNoMoreMoneyEvent(
+  async simulateNoMoreMoneyEvent(
     @Param() { id }: { id: number },
     @Body() params: UpdateAccountUseCaseParams,
   ): Promise<Account> {

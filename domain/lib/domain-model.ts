@@ -29,7 +29,7 @@ export abstract class DomainModel<
 
   /**
    * This method will map a StateMachine Snapshot to a basic model
-   * and must be implemented by the sub class model
+   * and must be implemented by the sub-class model
    * @protected
    */
   protected abstract toStateMachineId(): TMachine["id"];
