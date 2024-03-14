@@ -128,5 +128,7 @@ export class NoTransitionError extends Error {
     super(
       `Unable to apply the requested change on the entity "${entityId}" because it's in ${state} state`,
     );
+    this.name = "NoTransitionError";
+    Object.setPrototypeOf(this, NoTransitionError.prototype);
   }
 }

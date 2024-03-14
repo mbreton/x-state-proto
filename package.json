@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "start": "yarn start:dev",
+    "prestart:dev": "cd domain && yarn build >null | true",
     "start:dev": "stmux -w always -e ERROR -m system -- [ [ \"yarn start:dev:back\" .. \"yarn start:dev:front\" ] : -s 1/5 \"yarn start:dev:domain\" ]",
     "start:dev:front": "cd front-end && yarn start",
     "start:dev:back": "cd back-end && yarn start:dev",

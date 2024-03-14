@@ -12,7 +12,7 @@ import { NoTransitionError } from 'x-state-proto-domain';
 export class ExceptionsFilter implements ExceptionFilter {
   constructor(private readonly httpAdapter: AbstractHttpAdapter) {}
 
-  catch(exception: unknown, host: ArgumentsHost): void {
+  catch(exception: Error, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
 
     const httpStatus =
